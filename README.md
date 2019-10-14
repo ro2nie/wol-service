@@ -4,6 +4,6 @@ I personally use this app in one of my raspberry PIs to wake my NAS with Tasker 
 
 # Running on docker
 
-Run `docker build -t wol-service .` and then run it with `docker -p <local-port-of-choice>:3000 run -d wol-service`
+Run `docker build -t wol-service .` and then run it with `docker run --name wol-service -p <port of choice>:3000 -d --restart=always wol-service`
 
 Alternatively you can use docker compose by running `docker-compose build` later followed by `docker-compose up -d`
