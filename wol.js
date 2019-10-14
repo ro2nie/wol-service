@@ -1,5 +1,5 @@
 const express = require('express')
-const wol = require('wol')
+const wol = require('wakeonlan')
 const app = express()
 const port = 3000
 app.use(express.json())
@@ -12,22 +12,13 @@ app.post('/', async (req, res) => {
     return
   }
 
-  let successes = []
-
   try {
     const macs = req.body.macAddresses.filter(value => value.toUpperCase() !== 'FF:FF:FF:FF:FF:FF')
-
     if (macs) {      
       for (let mac of macs) {
-        await wol.wake(mac, (err, res) => {
-          if (err) {
-            console.error(err)
-          } else {
-            successes.push(mac)
-          }
-        });
+        await wol(mac)
       }
-      res.send({ successes })
+      res.send({message: 'Success'})
     }
   } catch (error) {
     res.status(400);
