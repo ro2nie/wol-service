@@ -1,0 +1,16 @@
+{
+  "name": "wol-service",
+  "version": "0.0.1",
+  "description": "A simple HTTP service that allows a user to send a magic WOL packet",
+  "main": "wol.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "wol": "^1.0.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ronnie Winter",
+  "license": "ISC"
+}
