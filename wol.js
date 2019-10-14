@@ -15,7 +15,7 @@ app.post('/', async (req, res) => {
   let successes = []
 
   try {
-    const macs = req.body.macAddresses.filter(value => value !== 'FF:FF:FF:FF:FF:FF') //Remove broadcast mac
+    const macs = req.body.macAddresses.filter(value => value.toUpperCase() !== 'FF:FF:FF:FF:FF:FF') //Remove broadcast mac
 
     if (macs) {      
       for (let mac of macs) {
