@@ -19,9 +19,7 @@ app.post('/', async (req, res) => {
         await wol.wake(mac, { address: "255.255.255.255" }, (error) => {
           if (error) {
             console.log('ERROR', mac)
-            // handle error
           } else {
-            // done sending packets
             console.log('SUCCESS', mac)
           }
         });
