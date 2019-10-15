@@ -1,8 +1,8 @@
 const express = require('express')
+const wol = require('wake_on_lan')
 const app = express()
 const port = 3000
 app.use(express.json())
-const exec = require('child_process').exec;
 
 app.post('/', async (req, res) => {
 
@@ -14,21 +14,19 @@ app.post('/', async (req, res) => {
 
   try {
     const macs = req.body.macAddresses.filter(value => value.toUpperCase() !== 'FF:FF:FF:FF:FF:FF')
-    if (macs) {
+    if (macs) {      
       for (let mac of macs) {
-        exec(`wakeonlan ${mac}`, (error, stdout, stderr) => {
-          if (stdout) {
-            console.log('INFO:', stdout)
-          }
-          if (stderr) {
-            console.error('ERROR:', stderr)
-          }
+        await wol.wake(mac, { address: "255.255.255.255" }, (error) => {
           if (error) {
-            console.error('ERROR:', error)
+            console.log('ERROR', mac)
+            // handle error
+          } else {
+            // done sending packets
+            console.log('SUCCESS', mac)
           }
-        })
+        });
       }
-      res.send({ message: 'Success' })
+      res.send({message: 'Success'})
     }
   } catch (error) {
     res.status(400);
