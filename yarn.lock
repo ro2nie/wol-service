@@ -366,8 +366,3 @@ vary@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
-
-wakeonlan@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/wakeonlan/-/wakeonlan-0.1.0.tgz#b79e73bba84d7d28d9a35795ef020b9eecc32a25"
-  integrity sha1-t55zu6hNfSjZo1eV7wILnuzDKiU=
