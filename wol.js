@@ -21,9 +21,11 @@ app.post('/', async (req, res) => {
       await ssh.connect(envVars)
 
       for (let mac of macs) {
-        ssh.execCommand(`./send-magic-packet.sh ${mac} 255.255.255.255`, { cwd: '/root/' }).then(result => {
-          console.log('STDOUT: ' + result.stdout)
-          console.log('STDERR: ' + result.stderr)
+        ssh.execCommand(`./send-magic-packet.sh ${mac} 255.255.255.255`).then(result => {
+          if (result.stderr) {
+            console.error(`STDERR: ${result.stderr}`)
+            throw new Error()
+          }
         })
       }
       res.send({ message: 'Success' })
