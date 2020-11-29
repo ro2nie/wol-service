@@ -1,8 +1,11 @@
 const express = require('express')
-const wol = require('wake_on_lan')
+const { NodeSSH } = require('node-ssh')
+const envVars = require('./env-vars.json')
 const app = express()
 const port = 3000
 app.use(express.json())
+
+const ssh = new NodeSSH()
 
 app.post('/', async (req, res) => {
 
@@ -14,17 +17,16 @@ app.post('/', async (req, res) => {
 
   try {
     const macs = req.body.macAddresses.filter(value => value.toUpperCase() !== 'FF:FF:FF:FF:FF:FF')
-    if (macs) {      
+    if (macs) {
+      await ssh.connect(envVars)
+
       for (let mac of macs) {
-        await wol.wake(mac, { address: "255.255.255.255" }, (error) => {
-          if (error) {
-            console.log('ERROR', mac)
-          } else {
-            console.log('SUCCESS', mac)
-          }
-        });
+        ssh.execCommand(`./send-magic-packet.sh ${mac} 255.255.255.255`, { cwd: '/root/' }).then(result => {
+          console.log('STDOUT: ' + result.stdout)
+          console.log('STDERR: ' + result.stderr)
+        })
       }
-      res.send({message: 'Success'})
+      res.send({ message: 'Success' })
     }
   } catch (error) {
     res.status(400);
